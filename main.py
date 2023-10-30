@@ -2,6 +2,7 @@ from turtle import Screen
 import time
 from snake import Snake
 from food import Food
+from scoreboard import Scoreboard
 
 
 screen = Screen()
@@ -12,6 +13,7 @@ screen.tracer(0)
 
 snake = Snake()
 food = Food()
+scoreboard = Scoreboard()
 
 screen.listen()
 screen.onkey(snake.up, 'Up')
@@ -26,7 +28,15 @@ while game_is_on:
     time.sleep(0.1)
     snake.move()
 
+    # distance() is a method of turtle that check the distance between two objects
+    # Detect collision with food
     if snake.head.distance(food) < 15:
         food.refresh()
+        scoreboard.increase_score()
+
+    # Detect collision with wall
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        game_is_on = False
+        scoreboard.game_over()
 
 screen.exitonclick()
