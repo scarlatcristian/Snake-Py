@@ -16,15 +16,19 @@ class Snake:
 
     def create_snake(self):
         for position in STARTING_POSITIONS:
-            snake_segment = Turtle('square')
-            snake_segment.color('white')
-            snake_segment.penup()
-            snake_segment.goto(position)
-            self.segments.append(snake_segment)
+            self.add_segment(position)
+
+    def add_segment(self, position):
+        snake_segment = Turtle('square')
+        snake_segment.color('white')
+        snake_segment.penup()
+        snake_segment.goto(position)
+        self.segments.append(snake_segment)
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
 
     def move(self):
-        # will start counting from the last segment and go down to the first one
-        # the we take the coordinations of the next segment and go there, this way the segments will always follow the next segment
         for seg_num in range(len(self.segments) - 1, 0, -1):
             next_segment_xcor = self.segments[seg_num - 1].xcor()
             next_segment_ycor = self.segments[seg_num - 1].ycor()
